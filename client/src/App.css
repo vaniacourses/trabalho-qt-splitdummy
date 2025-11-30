@@ -522,7 +522,7 @@
   border: 1px solid var(--border-color);
   border-radius: 5px;
   background-color: var(--card-background);
-}
+  }
 
 .participants-selection .participant-item input[type="checkbox"] {
   margin-right: 10px;
@@ -749,7 +749,7 @@
   border-radius: 4px;
   font-size: 0.85em;
   font-weight: 600;
-}
+  }
 
 .status-badge.active {
   background-color: var(--success-color);
