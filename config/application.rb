@@ -33,9 +33,12 @@ module FullstackApp
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_fullstack_app_session' # Nome do cookie de sessão
 
-    # Serve static files from the client/dist directory
-    config.middleware.use ActionDispatch::Static, "#{root}/client/dist" do |f|
-      f.start_with?('/assets') || f.eql?('/')
+    # Em desenvolvimento, o proxy para Vite será adicionado pelo initializer
+    # Em produção, serve arquivos estáticos do client/dist
+    unless Rails.env.development?
+      config.middleware.use ActionDispatch::Static, "#{root}/client/dist" do |f|
+        f.start_with?('/assets') || f.eql?('/')
+      end
     end
   end
 end

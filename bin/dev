@@ -1,2 +1,81 @@
 #!/usr/bin/env ruby
+# Script para iniciar Rails e Vite juntos em desenvolvimento
+require 'open3'
+
+def start_vite
+  puts "🚀 Iniciando servidor Vite na porta 5173..."
+  Dir.chdir('client') do
+    # Inicia o Vite em background, redirecionando output
+    pid = Process.spawn('npm run dev', 
+                       out: File::NULL, 
+                       err: File::NULL,
+                       pgroup: true)
+    pid
+  end
+end
+
+def wait_for_vite
+  require 'net/http'
+  require 'timeout'
+  
+  puts "⏳ Aguardando Vite iniciar (pode levar alguns segundos)..."
+  30.times do |i|
+    begin
+      uri = URI('http://localhost:5173')
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.read_timeout = 1
+      response = http.get('/')
+      if response.code.to_i < 500
+        puts "✅ Vite está rodando na porta 5173!"
+        return true
+      end
+    rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT, Timeout::Error
+      print "." if i % 3 == 0
+      sleep 1
+    end
+  end
+  puts "\n⚠️  Vite não iniciou ainda, mas continuando mesmo assim..."
+  puts "   (O Rails tentará fazer proxy quando o Vite estiver pronto)"
+  false
+end
+
+# Verifica se o Vite já está rodando
+def vite_running?
+  require 'net/http'
+  uri = URI('http://localhost:5173')
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.read_timeout = 1
+  http.get('/')
+  true
+rescue
+  false
+end
+
+# Inicia o Vite apenas se não estiver rodando
+vite_pid = nil
+unless vite_running?
+  vite_pid = start_vite
+  wait_for_vite
+else
+  puts "✅ Vite já está rodando na porta 5173"
+end
+
+# Inicia o Rails (que fará proxy para o Vite)
+puts ""
+puts "🚀 Iniciando servidor Rails na porta 3000..."
+puts "📱 Acesse: http://localhost:3000"
+puts "   (Frontend e Backend integrados na mesma porta!)"
+puts ""
+
+# Garante que o Vite seja encerrado quando o Rails parar
+at_exit do
+  if vite_pid
+    begin
+      Process.kill('TERM', -Process.getpgid(vite_pid))
+    rescue Errno::ESRCH, Errno::EPERM
+      # Processo já terminou ou não temos permissão
+    end
+  end
+end
+
 exec "./bin/rails", "server", *ARGV

@@ -84,23 +84,33 @@ cd ..
 
 ## 6. Inicialização do Projeto (ambiente local)
 
-### Forma rápida (tudo com script):
+### Forma recomendada (tudo integrado na porta 3000):
+```bash
+bin/dev
+```
+> Este comando inicia automaticamente o Vite (frontend) e o Rails (backend), e tudo fica acessível em **http://localhost:3000**. O Rails faz proxy reverso para o Vite em desenvolvimento, então você acessa tudo pela mesma porta!
+
+### Forma alternativa (setup completo):
 ```bash
 bin/setup
 ```
-> Este comando instala dependências, prepara o banco, limpa logs/temp e já sobe o servidor backend + frontend integrado.
+> Este comando instala dependências, prepara o banco, limpa logs/temp e já inicia os servidores.
 
-### Manualmente
-1. **Suba o backend:**
-    ```bash
-    ./bin/rails server # porta padrão: 3000
-    ```
-2. **Em outro terminal, rode o frontend:**
+### Manualmente (se preferir rodar separadamente)
+1. **Em um terminal, suba o frontend:**
     ```bash
     cd client
-    npm run dev # SPA: http://localhost:5173
+    npm run dev # Vite na porta 5173
     ```
-- O frontend (em dev) faz proxy automático para as rotas `/api`, `/login`, `/users`, etc, para o backend Rails (veja `client/vite.config.ts`).
+2. **Em outro terminal, suba o backend:**
+    ```bash
+    ./bin/rails server # Rails na porta 3000
+    ```
+3. **Acesse:**
+    - Frontend: http://localhost:5173 (faz proxy para Rails)
+    - Backend: http://localhost:3000 (API apenas)
+
+> **Nota:** Com `bin/dev`, tudo fica integrado na porta 3000. O Rails detecta requisições de API e processa normalmente, e faz proxy reverso para o Vite em todas as outras requisições.
 
 ## 7. Rodando os testes
 

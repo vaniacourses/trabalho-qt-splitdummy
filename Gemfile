@@ -50,4 +50,7 @@ group :development, :test do
 
   # Carrega variáveis do .env automaticamente em dev e test
   gem "dotenv-rails"
+  
+  # Proxy reverso para Vite em desenvolvimento
+  gem "rack-proxy"
 end
