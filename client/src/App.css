@@ -1,0 +1,837 @@
+/* Remover estilos de boilerplate do Vite/React que não são mais necessários */
+#root {
+  max-width: unset; /* Permitir que o App controle a largura total */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.logo,
+.card,
+.read-the-docs,
+@keyframes logo-spin,
+@media (prefers-reduced-motion: no-preference) {
+  display: none; /* Esconder elementos não utilizados */
+}
+
+/* Estilos globais para o contêiner principal do aplicativo */
+.App {
+  font-family: var(--font-family-base);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--background-light);
+  color: var(--text-color-light);
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Contêiner de autenticação (Login/Registro) */
+.auth-container {
+  background-color: var(--card-background);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  width: 100%;
+  margin-top: -50px; /* Ajuste para centralizar visualmente */
+  transition: all 0.3s ease-in-out;
+}
+
+.auth-container h1 {
+  color: var(--primary-dark);
+  margin-bottom: 30px;
+  font-size: 2.2em;
+}
+
+/* Estilos de formulário genéricos */
+.auth-form,
+.group-form,
+.expense-form,
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-form h2,
+.group-form h2,
+.expense-form h2,
+.payment-form h2 {
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.auth-form div,
+.group-form div,
+.expense-form div,
+.payment-form div {
+  text-align: left;
+}
+
+.auth-form label,
+.group-form label,
+.expense-form label,
+.payment-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-color-light);
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form textarea,
+.auth-form select,
+.group-form input[type="text"],
+.group-form textarea,
+.group-form select,
+.expense-form input[type="text"],
+.expense-form input[type="number"],
+.expense-form input[type="date"],
+.expense-form select,
+.payment-form input[type="number"],
+.payment-form input[type="date"],
+.payment-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: var(--card-background);
+  color: var(--text-color-light);
+}
+
+.auth-form input:focus,
+.group-form input:focus,
+.expense-form input:focus,
+.payment-form input:focus,
+.auth-form textarea:focus,
+.group-form textarea:focus,
+.expense-form textarea:focus,
+.payment-form textarea:focus,
+.auth-form select:focus,
+.group-form select:focus,
+.expense-form select:focus,
+.payment-form select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Mais sutil */
+  outline: none;
+}
+
+.auth-form button,
+.dashboard-header button,
+.dashboard-nav button,
+.group-form button,
+.expense-form button,
+.payment-form button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form button:hover,
+.dashboard-header button:hover,
+.dashboard-nav button:hover,
+.group-form button:hover,
+.expense-form button:hover,
+.payment-form button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.auth-form button:disabled,
+.group-form button:disabled,
+.expense-form button:disabled,
+.payment-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.error-message {
+  color: var(--error-color);
+  margin-bottom: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.toggle-auth-mode {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  margin-top: 25px;
+  font-size: 0.95em;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.toggle-auth-mode:hover {
+  color: var(--accent-dark);
+}
+
+/* Estilos do Dashboard do Usuário */
+.user-dashboard {
+  width: 100%;
+  max-width: 1100px; /* Aumentar um pouco a largura máxima */
+  background-color: var(--card-background);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  margin: 20px 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+}
+
+.dashboard-header h1 {
+  color: var(--primary-dark);
+  font-size: 2.5em;
+  margin: 0; /* Remover margem extra */
+}
+
+.dashboard-nav {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  justify-content: center;
+  flex-wrap: wrap; /* Para responsividade */
+}
+
+.dashboard-nav button {
+  background-color: var(--accent-color);
+}
+
+.dashboard-nav button:hover {
+  background-color: var(--accent-dark);
+}
+
+.dashboard-main {
+  margin-top: 20px;
+  text-align: left;
+}
+
+/* Estilos da Lista de Grupos */
+.group-list ul,
+.expense-list ul,
+.payment-list ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.group-item,
+.expense-item,
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: var(--background-light);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.group-item:hover,
+.expense-item:hover,
+.payment-item:hover {
+  background-color: #e8f5e9; /* Um verde bem claro */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.group-item span,
+.expense-info h4,
+.payment-info h4 {
+  cursor: pointer;
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 1.1em;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.group-item span:hover,
+.expense-info h4:hover,
+.payment-info h4:hover {
+  text-decoration: underline;
+  color: var(--primary-dark);
+}
+
+.group-item button,
+.expense-actions button,
+.payment-actions button {
+  background-color: var(--error-color);
+  margin-top: 0;
+  padding: 8px 15px;
+  font-size: 0.9em;
+  margin-left: 10px;
+}
+
+.group-item button.edit,
+.expense-actions button.edit,
+.payment-actions button.edit {
+  background-color: var(--accent-color);
+}
+
+.group-item button.edit:hover,
+.expense-actions button.edit:hover,
+.payment-actions button.edit:hover {
+  background-color: var(--accent-dark);
+}
+
+.group-item button:hover,
+.expense-actions button:hover,
+.payment-actions button:hover {
+  background-color: #c0392b;
+}
+
+/* Estilos do Formulário de Grupo/Despesa/Pagamento */
+.group-form,
+.expense-form,
+.payment-form {
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--background-light);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.group-form .form-actions,
+.expense-form .form-actions,
+.payment-form .form-actions {
+  display: flex;
+  justify-content: flex-end; /* Alinhar botões à direita */
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.group-form button,
+.expense-form button,
+.payment-form button {
+  margin-top: 0; /* Já ajustado pelo .form-actions */
+}
+
+/* Estilos dos Detalhes do Grupo */
+.group-details-view {
+  margin-top: 20px; /* Ajustar margem superior */
+  padding: 30px;
+  border-radius: 12px;
+  background-color: var(--card-background);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  text-align: left;
+  width: 100%;
+}
+
+.group-details-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.group-details-header button {
+  background-color: #6c757d; /* Cinza para botão de voltar */
+}
+.group-details-header button:hover {
+  background-color: #5a6268;
+}
+
+.group-details-header h2 {
+  margin-top: 15px;
+  font-size: 2.2em;
+  color: var(--primary-dark);
+}
+
+.group-description {
+  color: var(--text-color-light);
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.group-type {
+  font-weight: 500;
+  color: var(--accent-color);
+}
+
+.group-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.group-content {
+  display: grid;
+  gap: 30px; /* Espaçamento entre as seções de lista */
+}
+
+/* Estilos específicos para ExpenseList e PaymentList */
+.expense-list,
+.payment-list {
+  margin-top: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  background-color: var(--background-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.expense-list h3,
+.payment-list h3 {
+  color: var(--accent-color);
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 10px;
+}
+
+.expense-info,
+.payment-info {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.expense-info p,
+.payment-info p {
+  margin: 5px 0;
+  color: var(--text-color-light);
+}
+
+.expense-participants-details h5 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: var(--primary-dark);
+  font-size: 0.9em;
+}
+
+.expense-participants-details ul {
+  list-style: disc inside;
+  padding-left: 15px;
+}
+
+.expense-actions,
+.payment-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.expense-actions button,
+.payment-actions button {
+  margin-top: 0;
+}
+
+/* Estilos para GroupBalances */
+.group-balances {
+  margin-top: 30px;
+  padding: 30px;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  background-color: #e6ffe6; /* Fundo mais claro para balanços */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.group-balances h3 {
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+.group-balances h4 {
+  color: var(--accent-color);
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.group-balances ul {
+  list-style: none;
+  padding: 0;
+}
+
+.group-balances li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-balances li:last-child {
+  border-bottom: none;
+}
+
+.positive-balance {
+  color: var(--success-color);
+  font-weight: 600;
+}
+
+.negative-balance {
+  color: var(--error-color);
+  font-weight: 600;
+}
+
+.remaining-amount {
+  text-align: center;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin-top: 15px;
+}
+
+.splitting-param-input {
+  max-width: 80px; /* Ajustar largura para inputs de divisão */
+  margin-left: 10px;
+  text-align: right;
+}
+
+.participants-selection .participant-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--card-background);
+}
+
+.participants-selection .participant-item input[type="checkbox"] {
+  margin-right: 10px;
+  width: auto; /* Remover largura 100% */
+}
+
+.participants-selection .participant-item label {
+  margin-bottom: 0;
+  flex-grow: 1;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .user-dashboard {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container,
+  .user-dashboard {
+    padding: 15px;
+    margin-top: 0;
+    border-radius: 8px;
+  }
+
+  .auth-container h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2em;
+  }
+
+  .dashboard-nav {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .group-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .auth-form button,
+  .dashboard-header button,
+  .dashboard-nav button,
+  .group-form button,
+  .expense-form button,
+  .payment-form button,
+  .group-actions button {
+    width: 100%;
+    margin-right: 0;
+    padding: 10px 15px;
+    font-size: 1em;
+  }
+
+  .group-item,
+  .expense-item,
+  .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .group-item span,
+  .expense-info h4,
+  .payment-info h4 {
+    font-size: 1em;
+  }
+
+  .group-item button,
+  .expense-actions button,
+  .payment-actions button {
+    margin-left: 0;
+    width: 100%;
+    padding: 6px 10px;
+  }
+
+  .group-details-view {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .group-details-header h2 {
+    font-size: 1.8em;
+  }
+
+  .group-balances h3 {
+    font-size: 1.5em;
+  }
+
+  .group-balances h4 {
+    font-size: 1.2em;
+  }
+
+  .participants-selection .participant-item {
+    flex-wrap: wrap;
+  }
+
+  .participants-selection .participant-item label {
+    flex-basis: 100%;
+    margin-bottom: 5px;
+  }
+
+  .splitting-param-input {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+}
+
+/* Estilos para GroupMembersManager */
+.group-members-manager {
+  margin-top: 30px;
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--background-light);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.group-members-manager h3 {
+  color: var(--primary-dark);
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.group-members-manager h4 {
+  color: var(--accent-color);
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.member-search-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+.search-results {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-background);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.add-member-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.add-member-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+.add-member-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.members-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: var(--card-background);
+}
+
+.member-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.status-badge.inactive {
+  background-color: #6c757d;
+  color: white;
+}
+
+.remove-member-btn {
+  background-color: var(--error-color);
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.remove-member-btn:hover {
+  background-color: #c0392b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .App {
+    background-color: var(--background-dark);
+    color: var(--text-color-dark);
+  }
+  .auth-container,
+  .user-dashboard,
+  .group-form,
+  .expense-form,
+  .payment-form,
+  .participants-selection .participant-item {
+    background-color: var(--card-background-dark);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  .auth-form input[type="text"],
+  .auth-form input[type="email"],
+  .auth-form input[type="password"],
+  .auth-form textarea,
+  .auth-form select,
+  .group-form input[type="text"],
+  .group-form textarea,
+  .group-form select,
+  .expense-form input[type="text"],
+  .expense-form input[type="number"],
+  .expense-form input[type="date"],
+  .expense-form select,
+  .payment-form input[type="number"],
+  .payment-form input[type="date"],
+  .payment-form select {
+    background-color: #6c757d; /* Um pouco mais escuro para inputs */
+    color: var(--text-color-dark);
+    border-color: #495057;
+  }
+  .group-item:hover,
+  .expense-item:hover,
+  .payment-item:hover {
+    background-color: #5a6268; /* Hover mais escuro */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+  .group-balances {
+    background-color: #4CAF5020; /* Fundo verde mais escuro para modo noturno */
+    border-color: var(--primary-color);
+  }
+  .group-balances li {
+    border-bottom-color: #6c757d;
+  }
+  .group-details-header button {
+    background-color: #495057;
+  }
+  .group-details-header button:hover {
+    background-color: #6c757d;
+  }
+  .expense-list,
+  .payment-list {
+    background-color: var(--card-background-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+}
