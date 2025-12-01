@@ -25,7 +25,7 @@ RSpec.describe 'User Auth', type: :system do
     visit '/'
 
     fill_in 'Email', with: 'fulano1@email.com'
-    fill_in 'Senha', with: 'password123'
+    fill_in 'Senha', with: 'password'
     click_button 'Entrar'
 
     expect(page).to have_content('Bem-vindo, Fulano!')
