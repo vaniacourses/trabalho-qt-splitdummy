@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User Registration', type: :system do
+RSpec.describe 'User Auth', type: :system do
   it 'permite que um visitante crie uma conta', js: true do
     visit '/'
 
@@ -15,6 +15,19 @@ RSpec.describe 'User Registration', type: :system do
     fill_in 'Senha', with: 'senhasegura', match: :first
     fill_in 'Confirmar Senha', with: 'senhasegura'
     click_button 'Registrar'
+
+    expect(page).to have_content('Bem-vindo, Fulano!')
+  end
+
+  it 'permite que um usuário faça login', js: true do
+    create(:user, email: 'fulano1@email.com', name: 'Fulano')
+
+    visit '/'
+
+    fill_in 'Email', with: 'fulano1@email.com'
+    fill_in 'Senha', with: 'password123'
+    page.save_screenshot('screenshot.png')
+    click_button 'Entrar'
 
     expect(page).to have_content('Bem-vindo, Fulano!')
   end
