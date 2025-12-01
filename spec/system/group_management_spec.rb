@@ -1,5 +1,5 @@
 RSpec.describe 'Group Management', type: :system, js: true do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
 
   def login(user)
     visit '/'
