@@ -108,7 +108,7 @@ RSpec.describe 'BalanceCalculator Integration', type: :integration do
 
       # Original debt of 20 is paid, extra 10 creates reverse debt
       expect(detailed_balances[user_a][user_b]).to eq(BigDecimal('10.00'))
-      expect(detailed_balances[user_b][user_a]).to be_nil # Original debt cleared
+      expect(detailed_balances[user_b]).to be_nil # Original debt cleared, so user_b entry removed
     end
   end
 end

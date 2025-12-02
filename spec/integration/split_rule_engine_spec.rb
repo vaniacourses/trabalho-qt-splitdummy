@@ -4,11 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'SplitRuleEngine Integration', type: :integration do
   let!(:group) { create(:group) }
-  let!(:user_a) { create(:user) }
+  let!(:user_a) { group.creator } # Use the group creator as user_a (already has active membership)
   let!(:user_b) { create(:user) }
   let!(:user_c) { create(:user) }
 
-  let!(:membership_a) { create(:group_membership, group: group, user: user_a, status: 'active') }
   let!(:membership_b) { create(:group_membership, group: group, user: user_b, status: 'active') }
   let!(:membership_c) { create(:group_membership, group: group, user: user_c, status: 'active') }
 
@@ -89,6 +88,8 @@ RSpec.describe 'SplitRuleEngine Integration', type: :integration do
 
     it 'raises error when no active participants' do
       empty_group = create(:group)
+      # Create a group with no active members by removing the creator's membership
+      empty_group.group_memberships.first.update!(status: 'inactive')
       empty_expense = build(:expense, group: empty_group, total_amount: BigDecimal('100.00'))
 
       engine = SplitRuleEngine.new(empty_expense)

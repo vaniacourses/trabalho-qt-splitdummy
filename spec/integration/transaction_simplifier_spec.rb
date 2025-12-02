@@ -26,7 +26,7 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
       expect(simplified).to have_key(user_a)
       expect(simplified[user_a]).to have_key(user_b)
       expect(simplified[user_a][user_b]).to eq(BigDecimal('20.00'))
-      expect(simplified[user_b]).not_to have_key(user_a)
+      expect(simplified).not_to have_key(user_b) # user_b should be removed entirely since they have no debts
     end
 
     it 'removes cycles of three or more users' do
@@ -59,7 +59,7 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
 
       expect(simplified[user_a][user_b]).to eq(BigDecimal('20.00'))
       expect(simplified[user_b][user_c]).to eq(BigDecimal('10.00'))
-      expect(simplified[user_c]).not_to have_key(user_a)
+      expect(simplified).not_to have_key(user_c) # user_c should be removed entirely since they have no debts
     end
 
     it 'cleans up zero and small debts' do
@@ -76,7 +76,7 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
 
       expect(simplified[user_a]).to have_key(user_b)
       expect(simplified[user_a]).not_to have_key(user_c)
-      expect(simplified[user_b]).to be_empty # Should be cleaned up
+      expect(simplified).not_to have_key(user_b) # user_b should be removed entirely since they have no debts
     end
 
     it 'handles complex multi-user scenarios' do
@@ -101,10 +101,13 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
       # Should simplify opposing debts and remove cycles
       # A owes B 40, B owes A 20 -> A owes B 20
       expect(simplified[user_a][user_b]).to eq(BigDecimal('20.00'))
-      expect(simplified[user_b]).not_to have_key(user_a)
+      expect(simplified[user_a][user_c]).to eq(BigDecimal('5.00')) # A still owes C 5 after cycle removal
+      expect(simplified[user_b]).not_to have_key(user_a) # user_b no longer owes user_a
+      expect(simplified[user_b][user_c]).to eq(BigDecimal('30.00')) # user_b still owes user_c 30 (unchanged in this scenario)
 
-      # Other relationships should be preserved but optimized
-      expect(simplified.keys).to include(user_a, user_b, user_c)
+      # user_c should be removed entirely since they have no debts after cycle removal
+      expect(simplified.keys).to include(user_a, user_b)
+      expect(simplified.keys).not_to include(user_c)
     end
 
     it 'respects custom tolerance' do
@@ -138,7 +141,7 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
 
       # Simplified should be different
       expect(simplified[user_a][user_b]).to eq(BigDecimal('20.00'))
-      expect(simplified[user_b]).not_to have_key(user_a)
+      expect(simplified).not_to have_key(user_b) # user_b should be removed entirely since they have no debts
     end
   end
 

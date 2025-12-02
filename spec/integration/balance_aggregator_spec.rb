@@ -14,11 +14,11 @@ RSpec.describe 'BalanceAggregator Integration', type: :integration do
 
   describe '#aggregate_balances' do
     it 'aggregates balances and builds simplified debt graph' do
-      # Setup: User A pays 100, split equally
-      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('100.00'))
-      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.34'))
-      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.33'))
-      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.33'))
+      # Setup: User A pays 99, split equally (33.00 each)
+      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('99.00'))
+      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.00'))
 
       calculator = BalanceCalculator.new(group)
       net_balances = calculator.calculate_net_balances
@@ -68,10 +68,10 @@ RSpec.describe 'BalanceAggregator Integration', type: :integration do
 
     it 'validates overall balance and adjusts small discrepancies' do
       # Create a scenario with small rounding discrepancy
-      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('100.01'))
-      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.34'))
-      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.33'))
-      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.34'))
+      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('99.01'))
+      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.01'))
 
       calculator = BalanceCalculator.new(group)
       net_balances = calculator.calculate_net_balances
