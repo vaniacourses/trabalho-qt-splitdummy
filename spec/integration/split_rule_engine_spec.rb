@@ -4,23 +4,23 @@ require 'rails_helper'
 
 RSpec.describe 'SplitRuleEngine Integration', type: :integration do
   let!(:group) { create(:group) }
-  let!(:user_a) { create(:user) }
+  let!(:user_a) { group.creator } # Use the group creator as user_a (already has active membership)
   let!(:user_b) { create(:user) }
   let!(:user_c) { create(:user) }
 
-  let!(:membership_a) { create(:group_membership, group: group, user: user_a, status: 'active') }
   let!(:membership_b) { create(:group_membership, group: group, user: user_b, status: 'active') }
   let!(:membership_c) { create(:group_membership, group: group, user: user_c, status: 'active') }
 
   let(:expense) { build(:expense, group: group, payer: user_a, total_amount: BigDecimal('100.00')) }
 
   before do
+    # Mock expense participants for the engine
     allow(expense).to receive(:group).and_return(group)
     allow(expense).to receive(:total_amount).and_return(BigDecimal('100.00'))
   end
 
   describe '#apply_split' do
-    it 'divide igualmente entre membros ativos' do
+    it 'splits equally among active members' do
       engine = SplitRuleEngine.new(expense)
       result = engine.apply_split(:equally)
 
@@ -31,7 +31,7 @@ RSpec.describe 'SplitRuleEngine Integration', type: :integration do
       expect(result.values.sum).to eq(BigDecimal('100.00'))
     end
 
-    it 'divide por porcentagem' do
+    it 'splits by percentages' do
       percentages = {
         user_a.id => 50,
         user_b.id => 30,
@@ -88,6 +88,7 @@ RSpec.describe 'SplitRuleEngine Integration', type: :integration do
 
     it 'dispara erro quando não há participantes ativos' do
       empty_group = create(:group)
+      empty_group.group_memberships.first.update!(status: 'inactive')
       empty_expense = build(:expense, group: empty_group, total_amount: BigDecimal('100.00'))
 
       engine = SplitRuleEngine.new(empty_expense)

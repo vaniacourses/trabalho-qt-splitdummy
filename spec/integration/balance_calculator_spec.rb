@@ -62,7 +62,7 @@ RSpec.describe 'BalanceCalculator Integration', type: :integration do
 
       expect(detailed_balances[user_b][user_a]).to eq(BigDecimal('30.00'))
       expect(detailed_balances[user_c][user_a]).to eq(BigDecimal('30.00'))
-      expect(detailed_balances[user_a]).to be_nil
+      expect(detailed_balances[user_a]).to be_nil # No debts from payer to self
     end
 
     it 'diminui dívida após pagamentos' do
@@ -87,7 +87,7 @@ RSpec.describe 'BalanceCalculator Integration', type: :integration do
       detailed_balances = calculator.calculate_detailed_balances
 
       expect(detailed_balances[user_a][user_b]).to eq(BigDecimal('10.00'))
-      expect(detailed_balances[user_b][user_a]).to be_nil
+      expect(detailed_balances[user_b]).to be_nil
     end
   end
 end

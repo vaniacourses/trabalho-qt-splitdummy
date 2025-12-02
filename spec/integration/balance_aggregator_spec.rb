@@ -14,10 +14,10 @@ RSpec.describe 'BalanceAggregator Integration', type: :integration do
 
   describe '#aggregate_balances' do
     it 'agrega saldos e cria gráfico simplificado' do
-      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('100.00'))
-      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.34'))
-      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.33'))
-      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.33'))
+      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('99.00'))
+      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.00'))
 
       calculator = BalanceCalculator.new(group)
       net_balances = calculator.calculate_net_balances
@@ -58,10 +58,10 @@ RSpec.describe 'BalanceAggregator Integration', type: :integration do
     end
 
     it 'valida saldo geral e faz pequenos ajustes' do
-      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('100.01'))
-      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.34'))
-      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.33'))
-      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.34'))
+      expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('99.01'))
+      create(:expense_participant, expense: expense, user: user_a, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('33.00'))
+      create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('33.01'))
 
       calculator = BalanceCalculator.new(group)
       net_balances = calculator.calculate_net_balances

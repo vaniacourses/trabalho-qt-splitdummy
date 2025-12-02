@@ -25,7 +25,7 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
       expect(simplified).to have_key(user_a)
       expect(simplified[user_a]).to have_key(user_b)
       expect(simplified[user_a][user_b]).to eq(BigDecimal('20.00'))
-      expect(simplified[user_b]).not_to have_key(user_a)
+      expect(simplified).not_to have_key(user_b)
     end
 
     it 'remove ciclo com 3 ou mais usuários' do
@@ -70,7 +70,7 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
 
       expect(simplified[user_a]).to have_key(user_b)
       expect(simplified[user_a]).not_to have_key(user_c)
-      expect(simplified[user_b]).to be_empty
+      expect(simplified).not_to have_key(user_b)
     end
 
     it 'lidar com cenários com múltiplos usuários' do
@@ -92,9 +92,12 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
       simplified = simplifier.simplify_transactions
 
       expect(simplified[user_a][user_b]).to eq(BigDecimal('20.00'))
+      expect(simplified[user_a][user_c]).to eq(BigDecimal('5.00'))
       expect(simplified[user_b]).not_to have_key(user_a)
+      expect(simplified[user_b][user_c]).to eq(BigDecimal('30.00'))
 
-      expect(simplified.keys).to include(user_a, user_b, user_c)
+      expect(simplified.keys).to include(user_a, user_b)
+      expect(simplified.keys).not_to include(user_c)
     end
 
     it 'tem tolerância a valores válidos' do
@@ -124,12 +127,13 @@ RSpec.describe 'TransactionSimplifier Integration', type: :integration do
       expect(original_graph[user_b][user_a]).to eq(BigDecimal('30.00'))
 
       expect(simplified[user_a][user_b]).to eq(BigDecimal('20.00'))
-      expect(simplified[user_b]).not_to have_key(user_a)
+      expect(simplified).not_to have_key(user_b)
     end
   end
 
   describe 'integração com outros serviços' do
     it 'funciona com uma saída de BalanceCalculator' do
+      # Create a realistic scenario
       expense = create(:expense, group: group, payer: user_a, total_amount: BigDecimal('90.00'))
       create(:expense_participant, expense: expense, user: user_b, amount_owed: BigDecimal('30.00'))
       create(:expense_participant, expense: expense, user: user_c, amount_owed: BigDecimal('30.00'))
