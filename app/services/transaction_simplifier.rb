@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 # fullstack_app/app/services/transaction_simplifier.rb
-require 'bigdecimal'
-require_relative 'concerns/debt_opposition_handler'
-require_relative 'concerns/cycle_detector'
-require_relative 'concerns/cycle_processor'
+require "bigdecimal"
+require_relative "concerns/debt_opposition_handler"
+require_relative "concerns/cycle_detector"
+require_relative "concerns/cycle_processor"
 
 class TransactionSimplifier
   include DebtOppositionHandler
@@ -14,7 +14,7 @@ class TransactionSimplifier
   # O grafo deve ser no formato { devedor => { credor => montante } }.
   # @param debt_graph [Hash<User, Hash<User, BigDecimal>>] O grafo de dívidas a ser simplificado.
   # @param tolerance [BigDecimal] Tolerância para considerar um montante como zero.
-  def initialize(debt_graph, tolerance: BigDecimal('0.01'))
+  def initialize(debt_graph, tolerance: BigDecimal("0.01"))
     @debt_graph = deep_copy_hash(debt_graph) # Trabalha com uma cópia para não alterar o original
     @tolerance = tolerance
   end
