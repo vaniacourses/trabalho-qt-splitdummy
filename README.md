@@ -1,5 +1,7 @@
 # Fullstack App – Guia de Instalação e Uso
 
+[Relatório de testes do projeto](https://docs.google.com/document/d/1wMa7OEdTzEnBttlPaD6BlZ9Gu-lB8ycVYh2ZEJY0EI8/edit?usp=sharing)
+
 Este projeto é um sistema web fullstack composto por:
 - **Backend:** Ruby on Rails 8.x (API, autenticação, regras de negócio, integrações)
 - **Frontend:** React + TypeScript (SPA com Vite)
