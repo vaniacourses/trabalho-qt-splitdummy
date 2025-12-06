@@ -4,6 +4,8 @@
 
 [Apresentação do projeto](https://docs.google.com/presentation/d/1DqnfMzBVhxcmv4yPBq-FIHTrHHymJaVIMNKR2VXEo0o/edit?usp=sharing)
 
+[Repositório da primeira parte do trabalho](https://github.com/vaniacourses/trabalho-splitdummy)
+
 Este projeto é um sistema web fullstack composto por:
 - **Backend:** Ruby on Rails 8.x (API, autenticação, regras de negócio, integrações)
 - **Frontend:** React + TypeScript (SPA com Vite)
