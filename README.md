@@ -1,10 +1,14 @@
-# Fullstack App – Guia de Instalação e Uso
+# Splitdummy – Fullstack App para Estudo de Qualidade de Software
 
-[Relatório de testes do projeto](https://docs.google.com/document/d/1wMa7OEdTzEnBttlPaD6BlZ9Gu-lB8ycVYh2ZEJY0EI8/edit?usp=sharing)
+Este projeto foi desenvolvido para servir como objeto de estudo da disciplina de Qualidade de Software, demonstrando práticas e técnicas de desenvolvimento com foco em qualidade, testes e manutenibilidade.
 
-[Apresentação do projeto](https://docs.google.com/presentation/d/1DqnfMzBVhxcmv4yPBq-FIHTrHHymJaVIMNKR2VXEo0o/edit?usp=sharing)
+## Artefatos do Projeto
 
-[Repositório da primeira parte do trabalho](https://github.com/vaniacourses/trabalho-splitdummy)
+- **[Relatório de testes](https://docs.google.com/document/d/1wMa7OEdTzEnBttlPaD6BlZ9Gu-lB8ycVYh2ZEJY0EI8/edit?usp=sharing)** - Documentação completa dos testes realizados
+- **[Apresentação](https://docs.google.com/presentation/d/1DqnfMzBVhxcmv4yPBq-FIHTrHHymJaVIMNKR2VXEo0o/edit?usp=sharing)** - Slides da apresentação do projeto
+- **[Primeira parte](https://github.com/vaniacourses/trabalho-splitdummy)** - Repositório com a implementação do primeiro projeto usado na primeira parte do trabalho
+
+## Guia de Instalação
 
 Este projeto é um sistema web fullstack composto por:
 - **Backend:** Ruby on Rails 8.x (API, autenticação, regras de negócio, integrações)
@@ -30,8 +34,8 @@ gem install bundler
 
 ### b) Clone o repositório
 ```bash
-git clone git@github.com:riquedss/fullstack_app.git
-cd fullstack_app
+git clone git@github.com:vaniacourses/trabalho-qt-splitdummy.git
+cd trabalho-qt-splitdummy
 ```
 
 ## 2. Configuração de variáveis de ambiente (.env)
@@ -45,10 +49,10 @@ DB_USERNAME=root
 DB_PASSWORD=sua_senha_aqui
 
 # Alternativamente, você pode usar DATABASE_URL (Rails prioriza esta variável se presente)
-# DATABASE_URL="mysql2://root:sua_senha_aqui@127.0.0.1:3306/fullstack_app_development"
+# DATABASE_URL="mysql2://root:sua_senha_aqui@127.0.0.1:3306/trabalho_qt_splitdummy_development"
 
 # Para produção, use variáveis específicas:
-# FULLSTACK_APP_DATABASE_PASSWORD=senha_producao
+# TRABALHO_QT_SPLITDUMMY_DATABASE_PASSWORD=senha_producao
 ```
 **Crie o arquivo `.env`** baseado nesse modelo e ajuste as credenciais do seu banco local.
 
@@ -59,19 +63,19 @@ DB_PASSWORD=sua_senha_aqui
 O arquivo `config/database.yml` já está configurado para usar variáveis de ambiente do arquivo `.env`:
 
 - **Desenvolvimento e Teste:** Usa `DB_USERNAME` e `DB_PASSWORD` do `.env`
-- **Produção:** Usa `FULLSTACK_APP_DATABASE_PASSWORD` do `.env` (ou variáveis de ambiente do sistema)
+- **Produção:** Usa `TRABALHO_QT_SPLITDUMMY_DATABASE_PASSWORD` do `.env` (ou variáveis de ambiente do sistema)
 
 **Importante:**
 - O `database.yml` não contém senhas hardcoded - todas vêm das variáveis de ambiente
 - Se você definir `DATABASE_URL` no `.env`, o Rails priorizará essa variável sobre as configurações individuais do `database.yml`
-- Os nomes dos bancos são fixos: `fullstack_app_development`, `fullstack_app_test`, `fullstack_app_production`
+- Os nomes dos bancos são fixos: `trabalho_qt_splitdummy_development`, `trabalho_qt_splitdummy_test`, `trabalho_qt_splitdummy_production`
 
 Se necessário, crie os bancos:
 ```bash
 mysql -u root -p
 # No prompt MySQL:
-CREATE DATABASE fullstack_app_development;
-CREATE DATABASE fullstack_app_test;
+CREATE DATABASE trabalho_qt_splitdummy_development;
+CREATE DATABASE trabalho_qt_splitdummy_test;
 ```
 
 ## 4. Instalando dependências do backend (Ruby/Rails)
@@ -148,6 +152,65 @@ bundle exec rspec --format documentation
 - **Database Cleaner**: Limpeza do banco entre testes
 - **Faker**: Geração de dados aleatórios para testes
 
+## 7.1. Análise de Qualidade de Código
+
+### Mutant Testing
+O **Mutant** é uma ferramenta de teste de mutação que avalia a eficácia dos testes existentes. Funciona de forma semelhante a ferramentas como SonarQube, mas com foco específico na qualidade dos testes.
+
+Este projeto possui um script personalizado `bin/mutant` que facilita o uso da ferramenta:
+
+```bash
+# Executar no ambiente de teste
+RAILS_ENV=test bin/mutant
+
+# Ver opções disponíveis
+bin/mutant help
+```
+
+**Uso básico do script personalizado:**
+```bash
+# Testar todos os modelos
+RAILS_ENV=test bin/mutant models
+
+# Testar todos os serviços
+RAILS_ENV=test bin/mutant services
+
+# Testar componente específico
+RAILS_ENV=test bin/mutant user
+RAILS_ENV=test bin/mutant balance_calculator
+RAILS_ENV=test bin/mutant transaction_simplifier
+```
+
+**Como funciona:**
+- Introduz pequenas alterações (mutações) no código fonte
+- Executa a suite de testes contra cada mutação
+- Se os testes passam, a mutação "sobrevive" → indica teste insuficiente
+- Se os testes falham, a mutação é "morta" → teste adequado
+
+### RuboCop
+O **RuboCop** é um analisador estático de código Ruby, similar ao SonarQube, que verifica:
+
+```bash
+# Rodar análise de estilo e boas práticas
+bundle exec rubocop
+
+# Gerar relatório detalhado
+bundle exec rubocop --format offenses --format json > rubocop_report.json
+```
+
+**Verificações realizadas:**
+- **Style**: Convenções de código Ruby
+- **Lint**: Possíveis bugs e más práticas
+- **Metrics**: Complexidade ciclomática, tamanho de métodos
+- **Security**: Vulnerabilidades de segurança
+- **Performance**: Otimizações de código
+
+Ambas as ferramentas são essenciais para manter a qualidade do código, assim como o SonarQube faz em outras linguagens, garantindo:
+- Código mais limpo e maintainável
+- Testes mais robustos e eficazes
+- Detecção precoce de problemas
+- Conformidade com boas práticas
+
 ## 8. Build de produção
 
 ### Frontend
@@ -162,8 +225,8 @@ npm run build  # Gera arquivos estáticos em client/dist
 - A imagem Dockerfile está preparada para produção (não para dev!).
 - Rode conforme doc do topo do `Dockerfile`, exemplo:
 ```bash
-docker build -t fullstack_app .
-docker run -d -p 80:80 -e RAILS_MASTER_KEY=<valor> --name fullstack_app fullstack_app
+docker build -t trabalho-qt-splitdummy .
+docker run -d -p 80:80 -e RAILS_MASTER_KEY=<valor> --name trabalho-qt-splitdummy trabalho-qt-splitdummy
 ```
 - Recomenda-se definir também o `DATABASE_URL` via variável de ambiente.
 
@@ -180,5 +243,3 @@ docker run -d -p 80:80 -e RAILS_MASTER_KEY=<valor> --name fullstack_app fullstac
 - Qualquer dúvida, verifique logs ou consulte documentações de Rails, React, MySQL, Vite.
 
 ---
-
-
