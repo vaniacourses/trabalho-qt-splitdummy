@@ -67,7 +67,7 @@ group :test do
   gem "database_cleaner-active_record"
   gem "faker"
   gem "capybara"
-  gem "selenium-webdriver", "~> 4.8"
+  gem "selenium-webdriver", "~> 4.39"
   gem "simplecov", require: false
 
   # Mutation testing
