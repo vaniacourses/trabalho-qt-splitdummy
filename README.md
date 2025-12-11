@@ -8,6 +8,49 @@ Este projeto foi desenvolvido para servir como objeto de estudo da disciplina de
 - **[Apresentação](https://docs.google.com/presentation/d/1DqnfMzBVhxcmv4yPBq-FIHTrHHymJaVIMNKR2VXEo0o/edit?usp=sharing)** - Slides da apresentação do projeto
 - **[Primeira parte](https://github.com/vaniacourses/trabalho-splitdummy)** - Repositório com a implementação do primeiro projeto usado na primeira parte do trabalho
 
+## Responsáveis pelos Artefatos de Teste
+
+| Categoria | Artefato | Localização | Técnicas | Fases | Responsável |
+|-----------|----------|-------------|----------|-------|-------------|
+| **Testes Unitários** | Models | `/spec/models/` | Funcional | Unitária | [Henrique Santana] |
+| | Services | `/spec/services/` | Funcional + Estrutural | Unitária | [João Marins] |
+| | Controllers | `/spec/controllers/` | Funcional + Estrutural | Unitária | [Gabriel Ferraz + Henrique Santana] |
+| **Testes de Integração** | Integração | `/spec/integration/` | Funcional | Integração | [Daniel Borges] |
+| **Testes de Sistema** | Selenium Tests | `/spec/system/` | Funcional | Sistema | [Henrique Santana] |
+| **Testes de Performance** | Performance | `/spec/system/performance_spec.rb` | Não-funcional | Sistema | [Henrique Santana] |
+| **Factories** | Construtor de Dados de Teste | `/spec/factories/` | - | - | [Henrique Santana] |
+
+### Detalhamento dos Artefatos
+
+#### **Testes Unitários**
+- **Models** (`/spec/models/`): `user_spec.rb`, `expense_spec.rb`, `payment_spec.rb`, `group_spec.rb`
+- **Services** (`/spec/services/`): `balance_aggregator_spec.rb`, `settlement_optimizer_spec.rb`, `split_rule_engine_spec.rb`
+
+#### **Testes de Integração** (`/spec/integration/`)
+- `balance_aggregator_spec.rb`, `balance_calculator_spec.rb`, `settlement_optimizer_spec.rb`, `split_rule_engine_spec.rb`, `transaction_simplifier_spec.rb`
+
+#### **Testes de Sistema (Selenium)** (`/spec/system/`)
+- **Arquivos e funcionalidades:**
+  - `expenses_spec.rb`: Testa fluxo completo de adicionar despesas (login → grupo → adicionar despesa → verificar valores)
+  - `user_auth_spec.rb`: Valida registro de novos usuários e processo de login/logout
+  - `group_management_spec.rb`: Testa criação de grupos, edição de informações e gerenciamento de configurações
+  - `group_members_spec.rb`: Verifica adição/remoção de membros e permissões de acesso
+  - `payment_spec.rb`: Simula registro de pagamentos e atualização de saldos entre membros
+  - `group_balances_spec.rb`: Testa visualização e cálculo de saldos devedores/credores
+  - `performance_spec.rb`: Avalia tempo de resposta e performance das operações principais
+
+#### **Classes Complexas (não-CRUD)** (`/app/services/`)
+- `balance_aggregator.rb`
+- `balance_calculator.rb`
+- `settlement_optimizer.rb`
+- `split_rule_engine.rb`
+- `transaction_simplifier.rb`
+
+#### **Testes Baseados em Defeitos (Mutant)**
+- **Classes de Services:** (`/app/services/`)
+- **Resultado:** Slides 15-16 da [apresentação](https://docs.google.com/presentation/d/1DqnfMzBVhxcmv4yPBq-FIHTrHHymJaVIMNKR2VXEo0o/edit#slide=id.g3ac6612f3ae_0_200)
+- **Execução:** `RAILS_ENV=test bin/mutant services`
+
 ## Guia de Instalação
 
 Este projeto é um sistema web fullstack composto por:
