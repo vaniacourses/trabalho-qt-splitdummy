@@ -10,15 +10,15 @@ Este projeto foi desenvolvido para servir como objeto de estudo da disciplina de
 
 ## Responsáveis pelos Artefatos de Teste
 
-| Categoria | Artefato | Localização | Técnicas | Fases | Responsável |
-|-----------|----------|-------------|----------|-------|-------------|
-| **Testes Unitários** | Models | `/spec/models/` | Funcional | Unitária | [Henrique Santana] |
-| | Services | `/spec/services/` | Funcional + Estrutural | Unitária | [João Marins] |
-| | Controllers | `/spec/controllers/` | Funcional + Estrutural | Unitária | [Gabriel Ferraz + Henrique Santana] |
-| **Testes de Integração** | Integração | `/spec/integration/` | Funcional | Integração | [Daniel Borges] |
-| **Testes de Sistema** | Selenium Tests | `/spec/system/` | Funcional | Sistema | [Henrique Santana] |
-| **Testes de Performance** | Performance | `/spec/system/performance_spec.rb` | Não-funcional | Sistema | [Henrique Santana] |
-| **Factories** | Construtor de Dados de Teste | `/spec/factories/` | - | - | [Henrique Santana] |
+| Categoria | Artefato | Localização | Técnicas | Responsável |
+|-----------|----------|-------------|----------|-------------|
+| **Unitários** | Models | `/spec/models/` | Funcional | [Henrique Santana] |
+| | Services | `/spec/services/` | Funcional + Estrutural | [João Marins] |
+| **Controllers** | Controllers | `/spec/controllers/` | Funcional + Estrutural | [Gabriel Ferraz + Henrique Santana] |
+| **Integração** | Integração | `/spec/integration/` | Funcional | [Daniel Borges] |
+| **Sistema** | Selenium Tests | `/spec/system/` | Funcional | [Henrique Santana] |
+| **Performance** | Performance | `/spec/system/performance_spec.rb` | Não-funcional | [Henrique Santana] |
+| **Dados de Teste** | Factories | `/spec/factories/` | - | [Henrique Santana] |
 
 ### Detalhamento dos Artefatos
 
