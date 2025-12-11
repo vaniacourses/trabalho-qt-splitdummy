@@ -13,12 +13,12 @@ Este projeto foi desenvolvido para servir como objeto de estudo da disciplina de
 | Categoria | Artefato | Localização | Técnicas | Responsável |
 |-----------|----------|-------------|----------|-------------|
 | **Unitários** | Models | `/spec/models/` | Funcional | Henrique Santana |
-| | Services | `/spec/services/` | Funcional + Estrutural | João Marins |
+| **Unitários** | Services | `/spec/services/` | Funcional + Estrutural | João Marins |
 | **Controllers** | Controllers | `/spec/controllers/` | Funcional + Estrutural | Gabriel Ferraz + Henrique Santana |
 | **Integração** | Integração | `/spec/integration/` | Integração | Daniel Borges |
 | **Sistema** | Selenium Tests | `/spec/system/` | Funcional | Henrique Santana |
 | **Performance** | Performance | `/spec/system/performance_spec.rb` | Não-funcional | Henrique Santana |
-| **Dados de Teste(Mocks)** | Factories | `/spec/factories/` | - | Henrique Santana |
+| **Dados de Teste(Mocks)** | Factories | `/spec/factories/` | - | Henrique Santana + João Marins|
 
 ### Detalhamento dos Artefatos
 
